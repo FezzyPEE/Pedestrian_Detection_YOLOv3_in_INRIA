@@ -3,6 +3,6 @@ INRIAPerson
 backup
 vs
 vs-sampled
-darknet*
 *.pyc
 *.npy
+darknet53.conv.74

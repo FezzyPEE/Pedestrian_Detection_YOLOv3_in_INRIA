@@ -27,7 +27,7 @@ def solve(detector, path, save_file_name):
     save_predict_bb = []
     cnt = 0
     for file in original_image_files:
-        if file.split('.')[0] == 'txt': 
+        if file.split('.')[1] == 'txt': 
             continue # 排除标签文件
         image_path = original_image_path + file
         predict_bb = detector(image_path, path)
@@ -35,7 +35,7 @@ def solve(detector, path, save_file_name):
         cnt += 1
         print(cnt, " ", file, " has done")
 
-    save_predict_bb = np.array(save_predict_bb)
+    save_predict_bb = np.array(save_predict_bb,dtype='object')
     np.save(save_path+save_file_name, save_predict_bb)
     # che = np.load(save_path+save_file_name)
     # for i in range(che.shape[0]):
@@ -45,4 +45,4 @@ def solve(detector, path, save_file_name):
     #         print("error: ", i)
 
 if __name__ == '__main__':
-    solve(YOLO_detector, ('./YOLO/cfg/yolo-inria.cfg', './YOLO/backup/yolo-inria_130000.weights'), 'YOLO.npy')
+    solve(YOLO_detector, ('./cfg/yolo-inria.cfg', './backup/yolo-inria_10000.weights'), 'YOLO.npy')

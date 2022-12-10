@@ -2,7 +2,7 @@ import os
 from collections import namedtuple
 import numpy as np
 import cv2
-from skimage.io import imread, imsave
+from matplotlib.pyplot import imread, imsave
 
 '''
 评价 行人检测器 detector 的 检测质量（detection quality）
@@ -57,12 +57,15 @@ def solve(mode):
 	predict_file_name = mode + '.npy'
 	predict_bb = np.load(predict_path + predict_file_name, allow_pickle=True)
 	data = []
+	inv = 0
+	print(len(original_image_files),len(Ground_Truth),len(predict_bb))
 	for i in range(len(original_image_files)):
-                file = original_image_files[i]
-                if file.split('.')[0] == 'txt': 
-                    continue # 排除标签文件
+		file = original_image_files[i]
+		if file.split('.')[1] == 'txt': 
+			inv+=1
+			continue # 排除标签文件
 		# img = original_image_path + original_image_files[i]
-		data.append(Detection(original_image_files[i], Ground_Truth[i], predict_bb[i]))
+		data.append(Detection(original_image_files[i], Ground_Truth[i-inv], predict_bb[i-inv]))
 
 	pred_num = 0
 	gt_num = 0
@@ -81,9 +84,9 @@ def solve(mode):
 		image = imread(original_image_path + detection.image_name)
 		# draw the ground-truth bounding box along with the predicted bounding box
 		for gt in detection.gt:
-			cv2.rectangle(image, tuple(gt[:2]), tuple(gt[2:]), (0, 255, 0), 2) # green
+			cv2.rectangle(image, tuple(gt[:2]), tuple(gt[2:]), (0, 1, 0), 2) # green
 		for pred in detection.pred:
-			cv2.rectangle(image, tuple(pred[:2]), tuple(pred[2:]), (255, 0, 0), 2) # red
+			cv2.rectangle(image, tuple(pred[:2]), tuple(pred[2:]), (1, 0, 0), 2) # red
 		# save the output image
 		imsave(save_path+detection.image_name, image)
 

@@ -21,7 +21,7 @@ def solve():
     annotation_files = os.listdir(annotations_path)
     save_Ground_Truth = []
     for file in os.listdir(Test_path):
-        if file.split('.')[0] == 'txt': 
+        if file.split('.')[1] == 'txt': 
             continue # 排除标签文件
         test_file_2_txt = file.split('.')[0] + '.txt'
         if test_file_2_txt in annotation_files:
@@ -33,7 +33,7 @@ def solve():
             save_Ground_Truth.append(coordinates)
         else :
             save_Ground_Truth.append(np.array([]))
-    save_Ground_Truth = np.array(save_Ground_Truth)
+    save_Ground_Truth = np.array(save_Ground_Truth,dtype='object')
     np.save(save_path+save_file_name, save_Ground_Truth)
     che = np.load(save_path + save_file_name, allow_pickle=True)
     for i in range(che.shape[0]):

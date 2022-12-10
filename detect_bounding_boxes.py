@@ -87,7 +87,7 @@ def YOLO_detector(image_path, YOLO_path, min_confidence=0.5, nms_threshold=0.3):
 if __name__ == '__main__':
     image_path = './data/Test/person_032.png' # 没有行人
     # image_path = './data/Test/person_265.png' # 有行人
-    YOLO_path = ('./cfg/yolo-inria.cfg', './backup/yolo-inria_130000.weights')
+    YOLO_path = ('./cfg/yolo-inria.cfg', './backup/yolo-inria_10000.weights')
 
     pic, boxes = YOLO_detector(image_path, YOLO_path)
     # print(boxes)
